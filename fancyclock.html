@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>fancy clock</title>
+    <link rel="icon"
+        href="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1559749876&di=ac606906a49325683ede88c082df15f9&imgtype=jpg&er=1&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic2%2Fcover%2F00%2F31%2F73%2F5810c77da8e09_610.jpg"
+        sizes="32x32" />
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        #container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .cutline {
+            height: 40px;
+        }
+
+        #hours,
+        #minutes,
+        #seconds,
+        #secondsprocess {
+            display: inline-block;
+            box-shadow: #ccc 0px 0px 0px 1px;
+            width: 600px;
+            height: 60px;
+            border-radius: 30px;
+            text-align: left;
+        }
+
+        #hours {
+            background: #e74f51e0;
+        }
+
+        #minutes {
+            background: #f4cb03d1;
+        }
+
+        #seconds {
+            background: #40de19d9;
+        }
+
+        #secondsprocess {
+            background: #51cceec9;
+        }
+
+        .ball {
+            position: relative;
+            display: inline-block;
+            background: white;
+            border-radius: 30px;
+            box-shadow: #ccc 0px 0px 0px 1px;
+            width: 60px;
+            height: 60px;
+        }
+    </style>
+    <script src='https://code.jquery.com/jquery-3.4.1.min.js'></script>
+    <script>
+        function parseToTime(time) {
+            if (time >= 10) {
+                return (time - '');
+            } else {
+                return ('0' + time)
+            }
+        }
+        window.onload = function () {
+            $('body').css({
+                'width': window.innerWidth,
+                'height': window.innerHeight
+            });
+            var
+                hours = 0,
+                minutes = 0,
+                seconds = 0;
+            //hours
+            setInterval(() => {
+                hours = new Date().getHours();
+                var width = 0;
+                var hourslen = hours % 12;
+                var hoursdire = hours - 12 < 0;
+                if (hoursdire) {
+                    width = hourslen * parseInt(($('#hours').width() - $('#hours .ball').width()) / 12);
+                } else {
+                    width = $('#hours').width() - $('#hours .ball').width() - hourslen * parseInt(($(
+                        '#hours').width() - $('#hours .ball').width()) / 12);
+                }
+                if (width == parseInt($('#hours .ball').css('left'))) {
+                    console.log(width);
+                } else {
+                    $('#hours .ball').css('left', width);
+                }
+            }, 1000);
+            //minutes
+            setInterval(() => {
+                minutes = new Date().getMinutes();
+                var width = 0;
+                var minuteslen = minutes % 30;
+                var minutesdire = minutes - 30 < 0;
+                if (minutesdire) {
+                    width = minuteslen * parseInt(($('#minutes').width() - $('#minutes .ball').width()) /
+                        30);
+                } else {
+                    width = $('#minutes').width() - $('#minutes .ball').width() - minuteslen * parseInt(($(
+                        '#minutes').width() - $('#minutes .ball').width()) / 30);
+                }
+                if (width == parseInt($('#minutes .ball').css('left'))) {
+                    console.log(width);
+                } else {
+                    $('#minutes .ball').css('left', width);
+                }
+            }, 1000);
+            //seconds
+            setInterval(() => {
+                seconds = new Date().getSeconds();
+                var width = 0;
+                var secondslen = seconds % 30;
+                var secondsdire = seconds - 30 < 0;
+                if (secondsdire) {
+                    width = secondslen * parseInt(($('#seconds').width() - $('#seconds .ball').width()) /
+                        30);
+                } else {
+                    width = $('#seconds').width() - $('#seconds .ball').width() - secondslen * parseInt(($(
+                        '#seconds').width() - $('#seconds .ball').width()) / 30);
+                }
+                if (width == parseInt($('#seconds .ball').css('left'))) {
+                    console.log(width);
+                } else {
+                    $('#seconds .ball').css('left', width);
+                }
+                $('#secondsprocess .ball').animate({
+                    'left': $('#secondsprocess').width() - $('#secondsprocess .ball').width()
+                }, 450, 'linear');
+                $('#secondsprocess .ball').animate({
+                    'left': '0'
+                }, 450, 'linear');
+            }, 1000);
+        };
+    </script>
+</head>
+
+<body>
+    <div id='container'>
+        <div id='hours'>
+            <div class='ball'></div>
+        </div>
+        <div class='cutline'></div>
+        <div id='minutes'>
+            <div class='ball'></div>
+        </div>
+        <div class='cutline'></div>
+        <div id='seconds'>
+            <div class='ball'></div>
+        </div>
+        <div class='cutline'></div>
+        <div id='secondsprocess'>
+            <div class='ball'></div>
+        </div>
+    </div>
+</body>
+
+</html>
